@@ -17,7 +17,6 @@ with open('students.csv', newline='') as csvfile:
         data.append(strok)
 
 teachers = sorted(set(item[0] for item in data))
-
 grades = [3, 4, 5, 6, 7, 8, 9, 10]
 quantity = np.zeros((len(teachers), len(grades)), dtype=int)
 
