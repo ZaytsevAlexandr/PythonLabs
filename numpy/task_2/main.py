@@ -2,31 +2,22 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 def read(name):
-    data=np.array([])
-    with open(name, 'r') as file:
-        for line in file:
-            data=np.append(data,float(line.strip()))
-    return data
+    return np.loadtxt(name)
 
 def filter(data):
-    filtred_data=np.array([])
-    for i in range (len(data)):
-        if (i<9):
-            filtred_data=np.append(filtred_data,np.average(data[0:(i+1)]))
-        else:
-            filtred_data=np.append(filtred_data,np.average(data[i-9:(i+1)]))
+    cumsum_data = np.cumsum(data)
+    filtred_data = np.zeros_like(data)
+    filtred_data[:9] = cumsum_data[:9] / (np.arange(1, 10))
+    filtred_data[9:] = (cumsum_data[9:] - cumsum_data[:-9]) / 10
     return filtred_data
 
 def draw(data, filtred_data, save_name):
-    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(10, 5))  # 1 ряд, 2 столбца
-
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(10, 5))
     ax1.plot(data)
     ax1.set_title('Original Data')
-
     ax2.plot(filtred_data)
     ax2.set_title('Filtered Data')
-
-    plt.tight_layout() 
+    plt.tight_layout()
     plt.savefig(save_name)
     plt.show()
 
