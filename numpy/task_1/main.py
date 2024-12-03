@@ -3,12 +3,12 @@ import numpy as np
 import math
 
 def processing(data):
-    x,y = data.shape
-    dif = math.ceil(255 / (np.amax(data) - np.amin(data)))
-    min = np.amin(data)
-    for i in range(x):
-        for j in range(y):
-            data[i][j]=(data[i][j]-min)*dif
+    min_val = np.amin(data)
+    max_val = np.amax(data)
+    
+    dif = 255 / (np.amax(data) - np.amin(data))
+    
+    data = (data - np.amin(data)) * dif
     return data
 
 def create_photo(image,saving_image_name):
