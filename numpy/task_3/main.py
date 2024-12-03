@@ -3,14 +3,6 @@ import matplotlib.pyplot as plt
 from matplotlib.animation import PillowWriter
 from PIL import Image
 
-def read(name):
-    data = np.array([])
-    with open(name) as f:
-        for line in f:
-            data = np.append(data,[float(x) for x in line.split()])
-    data = np.expand_dims(data, axis=1)
-    return data
-
 def create_matrix(n):
     A = np.zeros((n, n))
     np.fill_diagonal(A, 1)
@@ -39,8 +31,9 @@ def create_gif(step, data, A, save_name):
     import os
     os.remove('temp.png')
 
-def complete_task(name,step,save_name):
-    data = read(name)
+def complete_task(name, step, save_name):
+    data = np.loadtxt(name)
+    data = np.expand_dims(data, axis=1)
     A = create_matrix(np.size(data))
     create_gif(step, data, A, save_name)
 
